@@ -1,13 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from 'react';
+import ChatInterface from '../components/ChatInterface';
+import ApiKeyModal from '../components/ApiKeyModal';
 
 const Index = () => {
+  const [showApiModal, setShowApiModal] = useState(false);
+
+  useEffect(() => {
+    const apiKey = localStorage.getItem('GROQ_API_KEY');
+    if (!apiKey) {
+      setShowApiModal(true);
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <ChatInterface />
+      <ApiKeyModal 
+        isOpen={showApiModal}
+        onClose={() => setShowApiModal(false)}
+      />
+    </>
   );
 };
 
